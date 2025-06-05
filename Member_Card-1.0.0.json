@@ -1,0 +1,233 @@
+{
+  "swagger": "2.0",
+  "basePath": "/availity/development-partner/pre-claim/eb-value-adds",
+  "schemes": [
+    "https"
+  ],
+  "info": {
+    "title": "Member Card",
+    "version": "1.0.0",
+    "x-ibm-name": "eb-value-adds-ebva-member-card",
+    "contact": {
+      "url": "https://git.availity.com/projects/PREC/repos/eb-value-adds/"
+    }
+  },
+  "x-availity-options": {
+    "securityProviders": [
+      "HIPAA_EXTERNAL"
+    ],
+    "apiId": "ebva-member-card",
+    "testable": false,
+    "backendSystem": "TYK",
+    "assemblyConfig": "TYK",
+    "env": {
+      "tst": "https://tykint.ea1.infrastructure.awn.availity.net/tst/pres/eb-value-adds/",
+      "qua": "https://tykint.ea1.infrastructure.awn.availity.net/qua/pres/eb-value-adds/",
+      "qap": "https://tykint-qap.ea1.infrastructure.awn.availity.net/qap/pres/eb-value-adds/",
+      "prd": "https://tykint.ea1.infrastructure.awp.availity.net/prd/pres/eb-value-adds/"
+    },
+    "pathReplace": {
+      "/pre-claim/eb-value-adds/": "/",
+      "/": "/"
+    }
+  },
+  "x-ibm-configuration": {
+    "enforced": true,
+    "testable": false,
+    "phase": "realized",
+    "cors": {
+      "enabled": false
+    },
+    "servers": [
+      {
+        "url": "https://api.availity.com/availity/development-partner/pre-claim/eb-value-adds",
+        "description": "",
+        "type": [
+          "production",
+          "development"
+        ]
+      }
+    ],
+    "oauth-servers": {
+      "oauth2": {
+        "tokenUrls": [
+          "https://api.availity.com/availity/v1/token"
+        ],
+        "authorizationUrls": [],
+        "refreshUrls": []
+      }
+    }
+  },
+  "paths": {
+    "/member-card/{cardUUID}": {
+      "get": {
+        "operationId": "getMembercardUUID",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "cardUUID",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "tags": [
+          "member-card/{cardUUID}"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    },
+    "/member-card": {
+      "post": {
+        "operationId": "postMembercard",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/memberCardRequest"
+            }
+          }
+        ],
+        "tags": [
+          "member-card"
+        ],
+        "responses": {
+          "default": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Successful"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "memberCardRequest": {
+      "type": "object",
+      "properties": {
+        "payerId": {
+          "type": "string",
+          "example": "ABCPAYER",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "memberId": {
+          "type": "string",
+          "example": "ABC-123456789",
+          "pattern": "^[\\dA-Za-z-]*$"
+        },
+        "groupNumber": {
+          "type": "string",
+          "example": "12345",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "JOHN",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "SMITH",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "example": "2022-10-20",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "planType": {
+          "type": "string",
+          "example": "MEDICAL",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "example": "2022-10-20",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "stateCode": {
+          "type": "string",
+          "example": "FL",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "planId": {
+          "type": "string",
+          "example": "FL0123456789",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "policyNumber": {
+          "type": "string",
+          "example": "ABC123",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "responsePayerId": {
+          "type": "string",
+          "example": "ABCPAYER",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "routingCode": {
+          "type": "string",
+          "example": "ABC",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "thirdPartySystemId": {
+          "type": "string",
+          "example": "ABC",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "asOfDate": {
+          "type": "string",
+          "example": "2022-10-20",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "subscriberRelationship": {
+          "type": "string",
+          "example": "S",
+          "pattern": "^\\D$"
+        },
+        "providerNPI": {
+          "type": "string",
+          "example": "123456789",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        },
+        "insuranceTypeCode": {
+          "type": "string",
+          "example": "12",
+          "pattern": "^[\\d\\s!\"#$%&'()*+,-./:;=?@A-z{|}]*$"
+        }
+      },
+      "required": [
+        "payerId",
+        "memberId"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "x-ibm-oauth-provider": "availity-partner-oauth2-provider-1-0-0",
+      "description": "",
+      "flow": "application",
+      "scopes": {
+        "hipaa": "Realtime - Live HIPAA API"
+      },
+      "tokenUrl": "https://api.availity.com/availity/v1/token"
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "hipaa"
+      ]
+    }
+  ],
+  "host": "api.availity.com"
+}
