@@ -48,8 +48,8 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Streamlit
-.streamlit/
+# Streamlit - allow config but ignore secrets
+.streamlit/secrets.toml
 
 # Logs
 *.log
