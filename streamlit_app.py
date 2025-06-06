@@ -98,7 +98,7 @@ def generate_oauth_token():
         # Headers as specified in Postman
         headers = {
             'Content-Type': 'application/json',
-            'env': 'sandbox'
+            'env': 'production'  # Changed from 'sandbox' to 'production'
         }
         
         # Body as JSON with client credentials
@@ -162,7 +162,7 @@ def get_api_headers():
         'Accept': 'application/json',
         'X-API-Key': UHC_CLIENT_ID,
         'Client-Id': UHC_CLIENT_ID,
-        'env': 'sandbox'  # Add sandbox environment header like OAuth
+        'env': 'production'  # Changed from 'sandbox' to 'production'
     }
 
 def search_member_eligibility(member_id, date_of_birth, search_option='memberIDDateOfBirth', 
@@ -199,14 +199,23 @@ def search_member_eligibility(member_id, date_of_birth, search_option='memberIDD
         st.write("Payload:")
         st.json(payload)
         
+        # Add timestamp to show when request was made
+        st.write(f"🕐 **Request Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
         response = requests.post(url, headers=headers, data=json.dumps(payload), timeout=30)
         
         st.write(f"📥 **Response Status:** {response.status_code}")
         
         if response.status_code == 200:
+            response_data = response.json()
+            
+            # Debug: Show response hash to detect if responses are identical
+            response_hash = hash(str(response_data))
+            st.write(f"🔍 **Response Hash:** {response_hash} (use this to check if responses are identical)")
+            
             return {
                 'success': True,
-                'data': response.json(),
+                'data': response_data,
                 'status_code': response.status_code
             }
         else:
@@ -794,8 +803,14 @@ def main():
     st.title("🏥 UHC Eligibility & Network Status Checker")
     st.markdown("---")
     
+    # Production environment warning
+    st.warning("⚠️ **PRODUCTION ENVIRONMENT** - This app is configured to use UHC's production API with real member data.")
+    
     # Sidebar for OAuth token management
     st.sidebar.header("🔐 OAuth Token Management")
+    
+    # Show environment indicator
+    st.sidebar.info("🏭 **Environment:** Production")
     
     # Check token status
     token_valid = is_token_valid()
@@ -856,6 +871,18 @@ def main():
         st.session_state.token_generated = False
         delete_token_file()
         st.sidebar.success("✅ Token cleared successfully!")
+        st.rerun()
+    
+    # Add a debug button to clear all session state
+    if st.sidebar.button("🧹 Clear All Cache", help="Clear all cached search results"):
+        # Clear eligibility results
+        if 'eligibility_result' in st.session_state:
+            del st.session_state.eligibility_result
+        if 'member_id' in st.session_state:
+            del st.session_state.member_id
+        if 'date_of_birth' in st.session_state:
+            del st.session_state.date_of_birth
+        st.sidebar.success("✅ Cache cleared successfully!")
         st.rerun()
     
     # Show current token status
