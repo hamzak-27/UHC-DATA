@@ -1,9 +1,0 @@
-@echo off
-echo Starting UHC Eligibility & Network Status Checker...
-echo.
-echo Installing/upgrading required packages...
-pip install -r requirements_streamlit.txt
-echo.
-echo Launching Streamlit app...
-streamlit run streamlit_app.py
-pause 
